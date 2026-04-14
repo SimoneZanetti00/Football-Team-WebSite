@@ -1,16 +1,18 @@
-# Deportivo Lo Stanzino — Team Website ⚽
+# Deportivo Lo Stanzino - Team Website
 
 This repository contains the early development version of the official website for **Deportivo Lo Stanzino**, a small football team project created by friends.
 
 The website is currently **a work in progress** and serves as an experimental platform to build a simple but modern online presence for the team.
+
 https://simonezanetti00.github.io/Football-Team-WebSite/
+
 ---
 
 ## Project Status
 
-🚧 **Development Stage**
+**Development Stage**
 
-This website is still in an early development phase.  
+This website is still in an early development phase.
 Some elements are temporary and will be improved over time, including:
 
 - layout refinements
@@ -39,30 +41,30 @@ This version focuses mainly on structure and content placement rather than final
 
 ## Project Structure
 
-```
+```text
 Football-Team-WebSite/
-│
-├── index.html          # Homepage
-├── squadra.html        # Team / players page
-├── shop.html           # Merchandise page
-├── style.css           # Main website styling
-├── script.js           # Basic website interactions
-│
-└── images/             # Image assets used across the site
-    ├── DEPORTIVO.jpg
-    ├── Logo.png
-    ├── Zeppe.jpg
-    ├── Gian.jpg
-    ├── Joaofinezze.jpg
-    ├── Pax.jpg
-    ├── Ilbuccia.jpg
-    ├── Gionginho.jpg
-    ├── Renzo'o.jpg
-    │
-    ├── Accendino.jpeg
-    ├── AccendinoTiamoanchesestrettospecialedition.jpeg
-    ├── TeeDeportivoFronte.jpeg
-    └── TeeWitheDeportivolostanzinoRetro.jpeg
+|
+|-- index.html          # Homepage
+|-- squadra.html        # Team / players page
+|-- shop.html           # Merchandise page
+|-- style.css           # Main website styling
+|-- script.js           # Basic website interactions
+|
+`-- images/             # Image assets used across the site
+    |-- DEPORTIVO.jpg
+    |-- Logo.png
+    |-- Zeppe.jpg
+    |-- Gian.jpg
+    |-- Joaofinezze.jpg
+    |-- Pax.jpg
+    |-- Ilbuccia.jpg
+    |-- Gionginho.jpg
+    |-- Renzo'o.jpg
+    |
+    |-- Accendino.jpeg
+    |-- AccendinoTiamoanchesestrettospecialedition.jpeg
+    |-- TeeDeportivoFronte.jpeg
+    `-- TeeWitheDeportivolostanzinoRetro.jpeg
 ```
 
 ---
@@ -98,4 +100,4 @@ The design, structure, and content may change significantly as development conti
 
 ---
 
-⚽ *Deportivo Lo Stanzino — Born in the Stanzino.*
+*Deportivo Lo Stanzino - Born in the Stanzino.*
