@@ -38,15 +38,32 @@ This version focuses mainly on structure and content placement rather than final
 ---
 
 ## Project Structure
-Football-Team-WebSite
+
+```
+Football-Team-WebSite/
 │
-├── index.html # Homepage
-├── squadra.html # Team page
-├── shop.html # Merchandise page
-├── style.css # Website styling
-├── script.js # Basic interactions
+├── index.html          # Homepage
+├── squadra.html        # Team / players page
+├── shop.html           # Merchandise page
+├── style.css           # Main website styling
+├── script.js           # Basic website interactions
 │
-└── images/ # Images used across the site
+└── images/             # Image assets used across the site
+    ├── DEPORTIVO.jpg
+    ├── Logo.png
+    ├── Zeppe.jpg
+    ├── Gian.jpg
+    ├── Joaofinezze.jpg
+    ├── Pax.jpg
+    ├── Ilbuccia.jpg
+    ├── Gionginho.jpg
+    ├── Renzo'o.jpg
+    │
+    ├── Accendino.jpeg
+    ├── AccendinoTiamoanchesestrettospecialedition.jpeg
+    ├── TeeDeportivoFronte.jpeg
+    └── TeeWitheDeportivolostanzinoRetro.jpeg
+```
 
 ---
 
