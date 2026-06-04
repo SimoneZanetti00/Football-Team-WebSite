@@ -59,43 +59,6 @@ document.querySelectorAll('.team-photo-closing').forEach(el => {
 });
 
 // ============================
-// ENHANCED PARALLAX EFFECT ON SCROLL
-// ============================
-const parallaxElements = document.querySelectorAll('.story-image, .hero, .team-photo-closing img');
-
-window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const rate = scrolled * -0.5;
-
-    parallaxElements.forEach(element => {
-        const rect = element.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            element.style.transform = `translateY(${rate * 0.1}px)`;
-        }
-    });
-});
-
-// ============================
-// NAVBAR BACKGROUND ON SCROLL
-// ============================
-const navbar = document.querySelector('.navbar');
-let lastScrollTop = 0;
-
-window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-
-    if (scrollTop > 100) {
-        navbar.style.backgroundColor = 'rgba(10, 14, 39, 0.95)';
-        navbar.style.borderBottomColor = 'rgba(212, 165, 116, 0.2)';
-    } else {
-        navbar.style.backgroundColor = 'rgba(10, 14, 39, 0.85)';
-        navbar.style.borderBottomColor = 'rgba(212, 165, 116, 0.1)';
-    }
-
-    lastScrollTop = scrollTop;
-});
-
-// ============================
 // ENHANCED MOUSE MOVE EFFECT ON CARDS
 // ============================
 const playerCards = document.querySelectorAll('.player-card');
@@ -155,18 +118,23 @@ flipCards.forEach(card => {
 
     const statRow = document.createElement('div');
     statRow.className = 'pali-presi';
-    statRow.setAttribute('aria-label', `${paliPresi} pali presi`);
-    statRow.title = `${paliPresi} pali presi`;
+    statRow.setAttribute('aria-label', `${paliPresi} posts hit`);
+    statRow.title = `${paliPresi} posts hit`;
 
-    for (let index = 0; index < paliPresi; index += 1) {
-        const postImage = document.createElement('img');
-        postImage.src = postImageSrc;
-        postImage.alt = '';
-        postImage.loading = 'lazy';
-        postImage.decoding = 'async';
-        statRow.appendChild(postImage);
-    }
+    const postImage = document.createElement('img');
+    postImage.className = 'palo-sticker';
+    postImage.src = postImageSrc;
+    postImage.alt = '';
+    postImage.loading = 'lazy';
+    postImage.decoding = 'async';
 
+    const meta = document.createElement('div');
+    meta.className = 'pali-meta';
+    meta.innerHTML =
+        `<span class="pali-count">&times;${paliPresi}</span>` +
+        '<span class="pali-label">posts hit</span>';
+
+    statRow.append(postImage, meta);
     cardBack.prepend(statRow);
 });
 
@@ -186,21 +154,63 @@ flipCards.forEach(card => {
 });
 
 // ============================
-// SCROLL PROGRESS INDICATOR
+// CONSOLIDATED SCROLL HANDLER (rAF-throttled)
+// Handles: parallax, navbar background, scroll progress bar
 // ============================
+const parallaxElements = document.querySelectorAll('.story-image, .hero, .team-photo-closing img');
+const navbar = document.querySelector('.navbar');
 const scrollProgress = document.querySelector('.scroll-progress');
 
-window.addEventListener('scroll', () => {
-    const progress = updateScrollProgress();
-    scrollProgress.style.transform = `scaleX(${progress / 100})`;
+function getScrollProgress() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollable <= 0) return 0;
+    return Math.min(100, Math.max(0, (window.scrollY / scrollable) * 100));
+}
 
-    // Hide progress bar when at top
-    if (progress < 5) {
-        scrollProgress.classList.add('hide');
-    } else {
-        scrollProgress.classList.remove('hide');
+function onScroll() {
+    const scrolled = window.scrollY;
+
+    // Parallax
+    const rate = scrolled * -0.05;
+    parallaxElements.forEach(element => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            element.style.transform = `translateY(${rate}px)`;
+        }
+    });
+
+    // Navbar background
+    if (navbar) {
+        const scrolledDown = scrolled > 100;
+        navbar.style.backgroundColor = scrolledDown
+            ? 'rgba(10, 14, 39, 0.95)'
+            : 'rgba(10, 14, 39, 0.85)';
+        navbar.style.borderBottomColor = scrolledDown
+            ? 'rgba(212, 165, 116, 0.2)'
+            : 'rgba(212, 165, 116, 0.1)';
     }
-});
+
+    // Scroll progress bar
+    if (scrollProgress) {
+        const progress = getScrollProgress();
+        scrollProgress.style.transform = `scaleX(${progress / 100})`;
+        scrollProgress.classList.toggle('hide', progress < 5);
+    }
+}
+
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            onScroll();
+            ticking = false;
+        });
+        ticking = true;
+    }
+}, { passive: true });
+
+// Set initial state on load
+onScroll();
 
 // ============================
 // LOAD ANIMATION
@@ -211,6 +221,14 @@ window.addEventListener('load', () => {
 
 // Ensure body starts with opacity 1 for smooth loading
 document.body.style.opacity = '1';
+
+// ============================
+// FOOTER YEAR
+// ============================
+const footerYear = document.getElementById('footer-year');
+if (footerYear) {
+    footerYear.textContent = new Date().getFullYear();
+}
 
 // ============================
 // PERFORMANCE: LAZY LOAD IMAGES
@@ -233,20 +251,3 @@ if ('IntersectionObserver' in window) {
         imageObserver.observe(img);
     });
 }
-
-// ============================
-// APPLE-STYLE SCROLL SMOOTHING
-// ============================
-let ticking = false;
-
-function updateScroll() {
-    // Add any scroll-based updates here
-    ticking = false;
-}
-
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        requestAnimationFrame(updateScroll);
-        ticking = true;
-    }
-});

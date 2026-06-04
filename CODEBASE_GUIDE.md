@@ -1,9 +1,11 @@
-# CODEBASE - Palo Team Website
+# CODEBASE - Deportivo Lo Stanzino Website
 
 ## 🧠 Project Overview
 This is a simple static website for a 5-a-side football (calcetto/palo sport) team made with friends.
 
 The goal is to create a clean, modern, minimal but visually appealing website.
+
+The site is a **single-page** experience: all sections (Hero, Team, Shop, Lo Stanzino) live in `index.html` and are reached via in-page anchor navigation.
 
 ---
 
@@ -18,18 +20,24 @@ No React, no backend, no complexity.
 
 ## 📄 Pages / Structure
 
-### 1. Home (index.html)
-- Hero section with team image
-- Team name
-- Short description
+`index.html` is the single-page site. Sections:
 
-### 2. Shop section
-- Product cards for jerseys / merchandise
+### Hero (`#hero`)
+- Team image / gradient background
+- Team name + tagline ("Born in the Stanzino")
+- Call-to-action button
+
+### Team (`#team`)
+- Flip cards for each player (front: photo + role, back: bio + stats)
+
+### Shop (`#shop`)
+- Product cards for merch (lighters, t-shirt)
 - Image, name, price
-- Simple layout grid
 
-### 3. Optional future pages
-- Team roster
+### Lo Stanzino (`#stanzino`)
+- Origin story of the club + closing team photo
+
+### Optional future sections
 - Matches / results
 - Contacts / social links
 
@@ -39,7 +47,7 @@ No React, no backend, no complexity.
 - Modern sporty aesthetic
 - Clean layout
 - Responsive design (mobile-first)
-- Use simple color palette (black / white / team color)
+- Color palette defined as CSS variables in `style.css` (`--primary` purple, `--accent` gold, `--dark`)
 - Smooth spacing and card design
 
 ---
@@ -49,10 +57,11 @@ No React, no backend, no complexity.
 - Avoid unnecessary libraries
 - Prefer reusable CSS classes
 - Keep components modular (sections)
+- Keep all images in `images/` — do not duplicate asset folders
 
 ---
 
-## 📌 Notes for AI assistant (Codex)
+## 📌 Notes for AI assistant
 When generating code:
 - Always maintain consistency with existing structure
 - Do not over-engineer

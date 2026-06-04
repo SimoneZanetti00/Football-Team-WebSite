@@ -438,12 +438,16 @@ p {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+    justify-content: center;
+    align-items: stretch;
     gap: 2.5rem;
     margin-top: 3rem;
 }
 
 .product-card {
+    display: flex;
+    flex-direction: column;
     background: var(--light-dark);
     border-radius: 16px;
     overflow: hidden;
@@ -473,6 +477,36 @@ p {
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* SOLD OUT — classic diagonal band barring the product */
+.product-card.sold-out .product-image img {
+    filter: grayscale(0.45) brightness(0.55);
+}
+
+.product-card.sold-out:hover .product-image img {
+    transform: none;
+}
+
+.sold-out-banner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    text-align: center;
+    text-indent: 0.35em; /* offset the trailing letter-spacing for true centering */
+    background: linear-gradient(180deg, #c1121f 0%, #9d0208 100%);
+    color: var(--secondary);
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    padding: 0.55rem 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+}
+
 .product-card:hover {
     transform: translateY(-8px);
     border-color: rgba(212, 165, 116, 0.3);
@@ -496,6 +530,7 @@ p {
 }
 
 .price {
+    margin-top: auto;
     padding: 1rem 1.5rem;
     font-size: 1.3rem;
     font-weight: 700;
@@ -764,18 +799,51 @@ p {
 .pali-presi {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
-    min-height: 10px;
-    margin-bottom: 0.35rem;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
 }
 
-.player-card.flip-card .pali-presi img {
+/* Larger, sticker-style palo. The source PNG has a dark photo background
+   (no transparency), so a radial mask fades the rectangular edges to
+   transparent, isolating the palo like a cut-out sticker. The more
+   specific selector beats the generic `.player-card img` rule. */
+.player-card.flip-card .palo-sticker {
     display: block;
+    height: 88px;
     width: auto;
-    height: 10px;
-    min-height: 0;
     object-fit: contain;
-    transition: none;
+    -webkit-mask-image: radial-gradient(ellipse 64% 94% at 50% 47%, #000 62%, transparent 86%);
+            mask-image: radial-gradient(ellipse 64% 94% at 50% 47%, #000 62%, transparent 86%);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55)) contrast(1.05) saturate(1.08);
+    transition: transform var(--transition-smooth);
+}
+
+.player-card.flip-card:hover .palo-sticker {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.pali-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.05;
+}
+
+.pali-count {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: var(--accent);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+.pali-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    opacity: 0.65;
 }
 
 .player-tag {
@@ -866,10 +934,11 @@ p {
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, var(--gold), var(--purple));
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+    transform: scaleX(0);
     transform-origin: left;
-    z-index: 1000;
-    opacity: 0.8;
+    z-index: 1001;
+    opacity: 0.9;
     transition: opacity 0.3s ease;
 }
 
@@ -877,15 +946,84 @@ p {
     opacity: 0;
 }
 
+/* ============================
+   FOOTER
+   ============================ */
+.site-footer {
+    background: var(--light-dark);
+    border-top: 1px solid rgba(212, 165, 116, 0.15);
+    padding: 4rem 2rem 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: 3rem;
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.footer-logo {
+    max-height: 56px;
+    width: auto;
+    opacity: 0.9;
+}
+
+.footer-brand h3 {
+    color: var(--secondary);
+    font-size: 1.3rem;
+}
+
+.footer-brand p {
+    color: var(--accent);
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color var(--transition-smooth);
+}
+
+.footer-links a:hover {
+    color: var(--accent);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    border-top: 1px solid rgba(212, 165, 116, 0.1);
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: rgba(224, 224, 224, 0.6);
+}
+
 @media (max-width: 1024px) {
     .players-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
-    }
-
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 2rem;
     }
 
     .team-photo-container {
@@ -923,7 +1061,6 @@ p {
     }
 
     .products-grid {
-        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
 
@@ -931,11 +1068,13 @@ p {
         height: 350px;
     }
 
-    .player-card.flip-card .pali-presi img {
-        width: auto;
-        height: 10px;
-        min-height: 0;
+    .player-card.flip-card .palo-sticker {
+        height: 68px;
         transform: none;
+    }
+
+    .pali-count {
+        font-size: 1.4rem;
     }
 
     .page-header {
@@ -1000,5 +1139,19 @@ p {
 
     .photo-caption p {
         font-size: 0.95rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-brand {
+        align-items: center;
+    }
+
+    .footer-links {
+        justify-content: center;
+        gap: 1.25rem;
     }
 }
