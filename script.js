@@ -100,6 +100,8 @@ window.addEventListener('scroll', () => {
 // ============================
 const playerCards = document.querySelectorAll('.player-card');
 const productCards = document.querySelectorAll('.product-card');
+const flipCards = document.querySelectorAll('[data-flip-card]');
+const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 const handleCardTilt = (e, card) => {
     const rect = card.getBoundingClientRect();
@@ -115,17 +117,34 @@ const handleCardTilt = (e, card) => {
     card.style.transform = `perspective(1000px) rotateX(${rotationX}deg) rotateY(${rotationY}deg) scale(1.02)`;
 };
 
-playerCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => handleCardTilt(e, card));
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
+if (supportsHover) {
+    playerCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => handleCardTilt(e, card));
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
     });
-});
 
-productCards.forEach(card => {
-    card.addEventListener('mousemove', (e) => handleCardTilt(e, card));
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
+    productCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => handleCardTilt(e, card));
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+}
+
+flipCards.forEach(card => {
+    const toggleFlip = () => {
+        const isFlipped = card.classList.toggle('is-flipped');
+        card.setAttribute('aria-pressed', String(isFlipped));
+    };
+
+    card.addEventListener('click', toggleFlip);
+    card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleFlip();
+        }
     });
 });
 
