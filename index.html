@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=trophies-1">
+    <link rel="stylesheet" href="style.css?v=reserve-1">
 </head>
 <body>
     <!-- SCROLL PROGRESS INDICATOR -->
@@ -241,6 +241,7 @@
                         <h3>Special Edition Lighter</h3>
                         <p class="product-subtitle">"Ti amo anche se stretto"</p>
                         <p class="price">€5</p>
+                        <button class="btn-reserve" type="button" data-reserve-open data-product="Special Edition Lighter">Prenota</button>
                     </div>
                     <div class="product-card fade-in sold-out">
                         <div class="product-image">
@@ -250,6 +251,7 @@
                         <h3>Deportivo White T-Shirt</h3>
                         <p class="product-subtitle">Front & Back Design</p>
                         <p class="price">€12</p>
+                        <button class="btn-reserve" type="button" disabled>Esaurito</button>
                     </div>
                 </div>
             </div>
@@ -309,6 +311,29 @@
         </div>
     </footer>
 
-    <script src="script.js?v=trophies-1"></script>
+    <!-- RESERVATION MODAL -->
+    <div class="reserve-modal" id="reserveModal" hidden>
+        <div class="reserve-backdrop" data-reserve-close></div>
+        <div class="reserve-dialog" role="dialog" aria-modal="true" aria-labelledby="reserveTitle">
+            <button class="reserve-x" type="button" data-reserve-close aria-label="Chiudi">&times;</button>
+
+            <form class="reserve-form" id="reserveForm" novalidate>
+                <h3 id="reserveTitle">Prenota il tuo merch</h3>
+                <p class="reserve-product">Prodotto: <span id="reserveProductName">—</span></p>
+                <label for="reserveEmail">La tua email</label>
+                <input type="email" id="reserveEmail" name="email" placeholder="nome@email.com" autocomplete="email" required>
+                <button type="submit" class="btn btn-primary reserve-submit">Invia richiesta</button>
+                <p class="reserve-feedback" id="reserveFeedback" role="status"></p>
+            </form>
+
+            <div class="reserve-success" id="reserveSuccess" hidden>
+                <p class="reserve-success-emoji">🍀</p>
+                <p>Grazie, se sei fortunato/a otterrai il merch al TDP !</p>
+                <button type="button" class="btn btn-primary" data-reserve-close>Chiudi</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=reserve-1"></script>
 </body>
 </html>

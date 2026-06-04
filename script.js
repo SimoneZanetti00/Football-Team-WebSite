@@ -251,3 +251,104 @@ if ('IntersectionObserver' in window) {
         imageObserver.observe(img);
     });
 }
+
+// ============================
+// MERCH RESERVATION MODAL (FormSubmit)
+// ============================
+const reserveModal = document.getElementById('reserveModal');
+
+if (reserveModal) {
+    const reserveForm = document.getElementById('reserveForm');
+    const reserveSuccess = document.getElementById('reserveSuccess');
+    const reserveProductName = document.getElementById('reserveProductName');
+    const reserveEmail = document.getElementById('reserveEmail');
+    const reserveFeedback = document.getElementById('reserveFeedback');
+    const reserveSubmit = reserveForm.querySelector('.reserve-submit');
+    const FORM_ENDPOINT = 'https://formsubmit.co/ajax/deportivolostanzino@gmail.com';
+
+    let lastFocused = null;
+
+    const openModal = (product) => {
+        lastFocused = document.activeElement;
+        reserveProductName.textContent = product || 'Merch';
+        reserveForm.hidden = false;
+        reserveSuccess.hidden = true;
+        reserveFeedback.textContent = '';
+        reserveEmail.value = '';
+        reserveEmail.classList.remove('invalid');
+        reserveModal.hidden = false;
+        document.body.style.overflow = 'hidden';
+        reserveEmail.focus();
+    };
+
+    const closeModal = () => {
+        reserveModal.hidden = true;
+        document.body.style.overflow = '';
+        if (lastFocused) {
+            lastFocused.focus();
+        }
+    };
+
+    document.querySelectorAll('[data-reserve-open]').forEach(btn => {
+        btn.addEventListener('click', () => openModal(btn.dataset.product));
+    });
+
+    reserveModal.querySelectorAll('[data-reserve-close]').forEach(el => {
+        el.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !reserveModal.hidden) {
+            closeModal();
+        }
+    });
+
+    const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+    reserveForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = reserveEmail.value.trim();
+        const product = reserveProductName.textContent;
+
+        if (!isValidEmail(email)) {
+            reserveEmail.classList.add('invalid');
+            reserveFeedback.textContent = 'Inserisci un indirizzo email valido.';
+            reserveEmail.focus();
+            return;
+        }
+
+        reserveEmail.classList.remove('invalid');
+        reserveFeedback.textContent = '';
+        reserveSubmit.disabled = true;
+        reserveSubmit.textContent = 'Invio in corso…';
+
+        try {
+            const response = await fetch(FORM_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    _subject: `Prenotazione merch: ${product}`,
+                    product,
+                    message: `Richiesta di prenotazione per "${product}" da ${email}.`,
+                    _template: 'table'
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            reserveForm.hidden = true;
+            reserveSuccess.hidden = false;
+        } catch (error) {
+            reserveFeedback.textContent = 'Ops, qualcosa è andato storto. Riprova più tardi.';
+        } finally {
+            reserveSubmit.disabled = false;
+            reserveSubmit.textContent = 'Invia richiesta';
+        }
+    });
+}
