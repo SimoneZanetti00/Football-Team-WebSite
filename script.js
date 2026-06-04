@@ -102,6 +102,17 @@ const playerCards = document.querySelectorAll('.player-card');
 const productCards = document.querySelectorAll('.product-card');
 const flipCards = document.querySelectorAll('[data-flip-card]');
 const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const postImageSrc = 'images/Stats_palo/ElevenLabs_image_nano-banana_Ri elabora l..._2026-06-04T19_23_05.png';
+const paliPresiByPlayer = {
+    'gionginho': 3,
+    'joao-finezze': 8,
+    'il-buccia': 8,
+    'gian': 1,
+    'renzo': 1,
+    'juan-zeppinho': 3,
+    'pax': 3,
+    'calore': 1
+};
 
 const handleCardTilt = (e, card) => {
     const rect = card.getBoundingClientRect();
@@ -132,6 +143,32 @@ if (supportsHover) {
         });
     });
 }
+
+flipCards.forEach(card => {
+    const playerKey = card.dataset.player;
+    const paliPresi = paliPresiByPlayer[playerKey] ?? 0;
+    const cardBack = card.querySelector('.card-back');
+
+    if (!cardBack || paliPresi <= 0 || cardBack.querySelector('.pali-presi')) {
+        return;
+    }
+
+    const statRow = document.createElement('div');
+    statRow.className = 'pali-presi';
+    statRow.setAttribute('aria-label', `${paliPresi} pali presi`);
+    statRow.title = `${paliPresi} pali presi`;
+
+    for (let index = 0; index < paliPresi; index += 1) {
+        const postImage = document.createElement('img');
+        postImage.src = postImageSrc;
+        postImage.alt = '';
+        postImage.loading = 'lazy';
+        postImage.decoding = 'async';
+        statRow.appendChild(postImage);
+    }
+
+    cardBack.prepend(statRow);
+});
 
 flipCards.forEach(card => {
     const toggleFlip = () => {

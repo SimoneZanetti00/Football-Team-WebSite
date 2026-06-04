@@ -747,6 +747,21 @@ p {
     color: var(--text-light);
 }
 
+.pali-presi {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    min-height: 10px;
+    margin-bottom: 0.35rem;
+}
+
+.pali-presi img {
+    display: block;
+    width: auto;
+    height: 10px;
+    object-fit: contain;
+}
+
 .player-tag {
     display: inline-flex;
     align-self: flex-start;
