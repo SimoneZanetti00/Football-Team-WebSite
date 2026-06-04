@@ -538,6 +538,100 @@ p {
 }
 
 /* ============================
+   TROPHIES SECTION
+   ============================ */
+.trophies {
+    background: var(--dark);
+    background-image:
+        radial-gradient(circle at 50% 0%, rgba(212, 165, 116, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 15% 100%, rgba(107, 33, 168, 0.08) 0%, transparent 50%);
+}
+
+.trophy-showcase {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 3.5rem;
+    text-align: left;
+}
+
+.trophy-visual {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* Golden glow behind the trophy */
+.trophy-visual::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 320px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(212, 165, 116, 0.38) 0%, transparent 68%);
+    z-index: 0;
+}
+
+.trophy-visual img {
+    position: relative;
+    z-index: 1;
+    width: 270px;
+    max-width: 62vw;
+    height: auto;
+    filter: drop-shadow(0 22px 32px rgba(0, 0, 0, 0.55));
+    animation: floating 6s ease-in-out infinite;
+}
+
+.trophy-details {
+    max-width: 460px;
+}
+
+.trophy-tag {
+    display: inline-flex;
+    padding: 0.35rem 0.9rem;
+    margin-bottom: 1rem;
+    border-radius: 999px;
+    background: rgba(212, 165, 116, 0.14);
+    border: 1px solid rgba(212, 165, 116, 0.3);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.trophy-details h3 {
+    font-size: 2.2rem;
+    color: var(--secondary);
+    margin-bottom: 0.3rem;
+}
+
+.trophy-meta {
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+}
+
+.trophy-details p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+.trophy-footnote {
+    color: var(--accent);
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* ============================
    STANZINO SECTION
    ============================ */
 
@@ -1139,6 +1233,25 @@ p {
 
     .photo-caption p {
         font-size: 0.95rem;
+    }
+
+    .trophy-showcase {
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .trophy-visual img {
+        width: 200px;
+    }
+
+    .trophy-visual::before {
+        width: 240px;
+        height: 240px;
+    }
+
+    .trophy-tag {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .footer-content {
