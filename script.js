@@ -155,9 +155,8 @@ flipCards.forEach(card => {
 
 // ============================
 // CONSOLIDATED SCROLL HANDLER (rAF-throttled)
-// Handles: parallax, navbar background, scroll progress bar
+// Handles: navbar background, scroll progress bar
 // ============================
-const parallaxElements = document.querySelectorAll('.story-image, .hero, .team-photo-closing img');
 const navbar = document.querySelector('.navbar');
 const scrollProgress = document.querySelector('.scroll-progress');
 
@@ -169,15 +168,6 @@ function getScrollProgress() {
 
 function onScroll() {
     const scrolled = window.scrollY;
-
-    // Parallax
-    const rate = scrolled * -0.05;
-    parallaxElements.forEach(element => {
-        const rect = element.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            element.style.transform = `translateY(${rate}px)`;
-        }
-    });
 
     // Navbar background
     if (navbar) {
