@@ -1,4 +1,27 @@
 // ============================
+// MOBILE NAV (hamburger)
+// ============================
+const navToggle = document.querySelector('.nav-toggle');
+const navLinks = document.getElementById('navLinks');
+
+if (navToggle && navLinks) {
+    const setMenu = (open) => {
+        navLinks.classList.toggle('open', open);
+        navToggle.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+    };
+
+    navToggle.addEventListener('click', () => {
+        setMenu(!navLinks.classList.contains('open'));
+    });
+
+    // Close the menu after tapping a link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setMenu(false));
+    });
+}
+
+// ============================
 // SMOOTH SCROLL NAVIGATION
 // ============================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
