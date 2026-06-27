@@ -22,7 +22,6 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
 }
 
 body {
@@ -197,7 +196,6 @@ section[id] {
     display: flex;
     align-items: center;
     justify-content: center;
-    scroll-snap-align: start;
     padding: 2rem;
 }
 
@@ -416,7 +414,6 @@ section[id] {
    ============================ */
 
 .team-photo-section {
-    scroll-snap-align: start;
     width: 100%;
     margin: 0;
     padding: 0;
@@ -920,7 +917,6 @@ section[id] {
    ============================ */
 
 .team-photo-closing {
-    scroll-snap-align: start;
     width: 100%;
     margin: 0;
     padding: 0;
@@ -1391,9 +1387,6 @@ section[id] {
 }
 
 @media (max-width: 768px) {
-    html {
-        scroll-snap-type: none;
-    }
 
     .nav-toggle {
         display: flex;
